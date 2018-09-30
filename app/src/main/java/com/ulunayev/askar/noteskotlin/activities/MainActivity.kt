@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportFragmentManager.beginTransaction().replace(R.id.container, BasketFragment()).commit()
       }
       R.id.nav_slideshow -> {
+        val s = 25
 
       }
       R.id.nav_manage -> {

@@ -60,23 +60,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     // Handle navigation view item clicks here.
     when (item.itemId) {
-      R.id.nav_camera -> {
+      R.id.nav_notes -> {
         supportFragmentManager.beginTransaction().replace(R.id.container, NotesFragment()).commit()
       }
-      R.id.nav_gallery -> {
+      R.id.nav_basket -> {
         supportFragmentManager.beginTransaction().replace(R.id.container, BasketFragment()).commit()
       }
-      R.id.nav_slideshow -> {
-        val s = 25
+      R.id.nav_settings -> {
 
       }
-      R.id.nav_manage -> {
-
-      }
-      R.id.nav_share -> {
-
-      }
-      R.id.nav_send -> {
+      R.id.nav_about_us -> {
 
       }
     }

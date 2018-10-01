@@ -4,21 +4,25 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.ulunayev.askar.noteskotlin.fragments.NotesFragment
-import java.util.*
 
-class NotesPagerAdapter(fm: FragmentManager, private val numberOfTabs: Int) : FragmentStatePagerAdapter(fm) {
+class NotesPagerAdapter(fm: FragmentManager, names: ArrayList<String>) : FragmentStatePagerAdapter(fm) {
   private val fragments = ArrayList<NotesFragment>()
+  var names = ArrayList<String>()
 
   init {
-    // TODO: get names from db
-    for (i in 0 until numberOfTabs) fragments.add(NotesFragment())
+    this.names = names
+    for (i in 0 until names.size) fragments.add(NotesFragment())
   }
 
   override fun getItem(position: Int): Fragment {
     return fragments[position]
   }
 
+  override fun getPageTitle(position: Int): CharSequence? {
+    return names.get(position)
+  }
+
   override fun getCount(): Int {
-    return numberOfTabs
+    return names.size
   }
 }

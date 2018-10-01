@@ -10,6 +10,7 @@ import android.view.MenuItem
 import com.ulunayev.askar.noteskotlin.R
 import com.ulunayev.askar.noteskotlin.fragments.BasketFragment
 import com.ulunayev.askar.noteskotlin.fragments.NotesFragment
+import com.ulunayev.askar.noteskotlin.fragments.NotesMainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // Handle navigation view item clicks here.
     when (item.itemId) {
       R.id.nav_notes -> {
-        supportFragmentManager.beginTransaction().replace(R.id.container, NotesFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.container, NotesMainFragment()).commit()
       }
       R.id.nav_basket -> {
         supportFragmentManager.beginTransaction().replace(R.id.container, BasketFragment()).commit()

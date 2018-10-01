@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import com.ulunayev.askar.noteskotlin.R
 import com.ulunayev.askar.noteskotlin.fragments.BasketFragment
-import com.ulunayev.askar.noteskotlin.fragments.NotesFragment
 import com.ulunayev.askar.noteskotlin.fragments.NotesMainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -68,7 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportFragmentManager.beginTransaction().replace(R.id.container, BasketFragment()).commit()
       }
       R.id.nav_settings -> {
-
+        //blablablabcmdkcmnlmklcmw
       }
       R.id.nav_about_us -> {
 

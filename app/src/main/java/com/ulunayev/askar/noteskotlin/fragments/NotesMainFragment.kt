@@ -6,9 +6,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.ulunayev.askar.noteskotlin.R
 import com.ulunayev.askar.noteskotlin.activities.NewNoteActivity
 import com.ulunayev.askar.noteskotlin.adapters.NotesPagerAdapter
@@ -24,14 +22,33 @@ class NotesMainFragment : Fragment() {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-
+    setHasOptionsMenu(true);
     setupTabLayoutAndViewPager()
 
     fab.setOnClickListener { view ->
       intentToNewNoteActivityWithAnimation(view)
     }
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+    when (item?.itemId){
+
+    }
+
+    return super.onOptionsItemSelected(item)
 
   }
+
+  override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    inflater?.inflate(R.menu.menu_notes_main, menu)
+    super.onCreateOptionsMenu(menu, inflater)
+  }
+//
+//  fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//    inflater.inflate(R.menu.your_menu_xml, menu)
+//    super.onCreateOptionsMenu(menu, inflater)
+//  }
 
   fun setupTabLayoutAndViewPager() {
     notesViewPager.adapter = NotesPagerAdapter(fragmentManager!!, arrayListOf("first", "second", "third"))

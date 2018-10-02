@@ -19,8 +19,10 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".activities.NewNoteActivity"
-      android:theme="@style/AppTheme.Transparent"/>
+    <activity
+      android:name=".activities.NewNoteActivity"
+      android:theme="@style/AppTheme.Transparent" />
+    <activity android:name=".activities.SettingsActivity"></activity>
   </application>
 
 </manifest>

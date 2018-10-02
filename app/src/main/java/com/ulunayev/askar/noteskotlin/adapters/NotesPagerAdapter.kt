@@ -5,9 +5,9 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.ulunayev.askar.noteskotlin.fragments.NotesFragment
 
-class NotesPagerAdapter(fm: FragmentManager, names: ArrayList<String>) : FragmentStatePagerAdapter(fm) {
-  private val fragments = ArrayList<NotesFragment>()
-  var names = ArrayList<String>()
+class NotesPagerAdapter(fm: FragmentManager, names: List<String>) : FragmentStatePagerAdapter(fm) {
+  val fragments = ArrayList<NotesFragment>()
+  var names = emptyList<String>()
 
   init {
     this.names = names

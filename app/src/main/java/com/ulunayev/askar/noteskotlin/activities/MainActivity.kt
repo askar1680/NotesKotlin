@@ -1,5 +1,6 @@
 package com.ulunayev.askar.noteskotlin.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -42,35 +43,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    menuInflater.inflate(R.menu.main, menu)
-    return true
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.action_settings -> return true
-      else -> return super.onOptionsItemSelected(item)
-    }
-  }
-
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.nav_notes -> {
+        navigationView.menu.getItem(0).isChecked = true
         supportFragmentManager.beginTransaction().replace(R.id.container, NotesMainFragment()).commit()
       }
       R.id.nav_basket -> {
+        navigationView.menu.getItem(0).isChecked = true
         supportFragmentManager.beginTransaction().replace(R.id.container, BasketFragment()).commit()
       }
       R.id.nav_settings -> {
-
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
       }
       R.id.nav_about_us -> {
-
       }
     }
-    item.isChecked = true
     drawer_layout.closeDrawer(GravityCompat.START)
     return true
   }
+
 }

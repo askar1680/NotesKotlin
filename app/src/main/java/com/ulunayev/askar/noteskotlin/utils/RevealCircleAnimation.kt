@@ -8,6 +8,8 @@ import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
 
 class RevealCircleAnimation(val rootLayout: View?, val revealX: Int, val revealY: Int){
+
+
   fun revealActivity(onFinished: () -> (Unit)) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       rootLayout?.let {rootLayout ->

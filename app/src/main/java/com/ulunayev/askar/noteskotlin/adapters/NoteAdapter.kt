@@ -23,7 +23,20 @@ class NoteAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NoteAdap
     with(holder) {
       view.titleTV.text = note.title
       view.noteTV.text = note.note
+      view.darkView.visibility = if (note.isSelected) View.VISIBLE else View.GONE
+      view.doneImageView.visibility = if (note.isSelected) View.VISIBLE else View.GONE
+
     }
+  }
+
+  fun clickNote(position: Int){
+    notes[position].isSelected = !notes[position].isSelected
+    notifyItemChanged(position)
+  }
+
+  fun deletingFinished(){
+    for (note in notes) note.isSelected = false
+    notifyDataSetChanged()
   }
 
   class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)

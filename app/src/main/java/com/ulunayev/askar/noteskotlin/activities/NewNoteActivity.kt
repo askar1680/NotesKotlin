@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.ulunayev.askar.noteskotlin.R
 import android.os.Build
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.ulunayev.askar.noteskotlin.utils.RevealCircleAnimation
@@ -39,10 +40,27 @@ class NewNoteActivity : AppCompatActivity() {
     setupRevealCircleAnimation()
   }
 
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu_new_note, menu)
+    return super.onCreateOptionsMenu(menu)
+  }
+
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId){
       android.R.id.home -> {
         finish()
+      }
+      R.id.time_picker -> {
+
+      }
+      R.id.color_picker -> {
+
+      }
+      R.id.share -> {
+
+      }
+      R.id.delete -> {
+
       }
     }
     return super.onOptionsItemSelected(item)

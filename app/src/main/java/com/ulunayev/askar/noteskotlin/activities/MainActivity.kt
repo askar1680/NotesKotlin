@@ -1,19 +1,25 @@
 package com.ulunayev.askar.noteskotlin.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.view.ActionMode
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.ulunayev.askar.noteskotlin.R
 import com.ulunayev.askar.noteskotlin.fragments.BasketFragment
+import com.ulunayev.askar.noteskotlin.fragments.NotesFragment
 import com.ulunayev.askar.noteskotlin.fragments.NotesMainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+  private var actionMode: ActionMode? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -42,35 +48,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    menuInflater.inflate(R.menu.main, menu)
-    return true
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.action_settings -> return true
-      else -> return super.onOptionsItemSelected(item)
-    }
-  }
-
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.nav_notes -> {
+        navigationView.menu.getItem(0).isChecked = true
         supportFragmentManager.beginTransaction().replace(R.id.container, NotesMainFragment()).commit()
       }
       R.id.nav_basket -> {
+        navigationView.menu.getItem(0).isChecked = true
         supportFragmentManager.beginTransaction().replace(R.id.container, BasketFragment()).commit()
       }
       R.id.nav_settings -> {
-
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
       }
       R.id.nav_about_us -> {
-
       }
     }
-    item.isChecked = true
     drawer_layout.closeDrawer(GravityCompat.START)
     return true
+
   }
+
 }

@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
-    android:id="@+id/action_new_section"
+    android:id="@+id/add_new_section"
     android:orderInCategory="0"
     android:title="Добавить раздел"
     app:showAsAction="never"
     />
 
   <item
-    android:id="@+id/action_search"
+    android:id="@+id/search"
     app:showAsAction="always"
     android:icon="@drawable/ic_search"
     android:title="Поиск"/>

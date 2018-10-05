@@ -11,6 +11,9 @@ import com.ulunayev.askar.noteskotlin.R
 import com.ulunayev.askar.noteskotlin.activities.NewNoteActivity
 import com.ulunayev.askar.noteskotlin.adapters.NotesPagerAdapter
 import kotlinx.android.synthetic.main.fragment_notes_main.*
+import kotlinx.android.synthetic.main.alert_new_section.*
+import android.app.Dialog
+import android.content.Context
 
 
 class NotesMainFragment : Fragment() {
@@ -19,6 +22,9 @@ class NotesMainFragment : Fragment() {
                             savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.fragment_notes_main, container, false)
   }
+
+  private lateinit var sectionNames: MutableList<String>
+  private lateinit var sectionsAdapter: NotesPagerAdapter
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
@@ -33,25 +39,32 @@ class NotesMainFragment : Fragment() {
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
     when (item?.itemId){
+      R.id.add_new_section -> {
+        val newSectionDialog = NewSectionDialog(context!!)
+        newSectionDialog.showDialog {
+          sectionNames.add(it)
+          sectionsAdapter.fragments.add(NotesFragment())
+          sectionsAdapter.notifyDataSetChanged()
+        }
+      }
+      R.id.search -> {
 
+      }
     }
 
     return super.onOptionsItemSelected(item)
-
   }
 
   override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
     inflater?.inflate(R.menu.menu_notes_main, menu)
     super.onCreateOptionsMenu(menu, inflater)
   }
-//
-//  fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//    inflater.inflate(R.menu.your_menu_xml, menu)
-//    super.onCreateOptionsMenu(menu, inflater)
-//  }
 
   fun setupTabLayoutAndViewPager() {
-    notesViewPager.adapter = NotesPagerAdapter(fragmentManager!!, arrayListOf("first", "second", "third"))
+    sectionNames = arrayListOf("first", "second", "third")
+    sectionsAdapter = NotesPagerAdapter(fragmentManager!!, sectionNames)
+    notesViewPager.adapter = sectionsAdapter
+
     tablayout.setupWithViewPager(notesViewPager)
     notesViewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tablayout))
   }
@@ -68,5 +81,24 @@ class NotesMainFragment : Fragment() {
 
       ActivityCompat.startActivity(context!!, intent, options.toBundle())
     }
+  }
+}
+
+class NewSectionDialog(val context: Context) {
+  fun showDialog(onSuccess: (String) -> (Unit)) {
+    val dialog = Dialog(context)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setCancelable(false)
+    dialog.setContentView(R.layout.alert_new_section)
+
+    dialog.okButton.setOnClickListener {
+      if (!dialog.nameEditText.text.isEmpty()){ onSuccess(dialog.nameEditText.text.toString()); dialog.dismiss() }
+    }
+    dialog.cancelButton.setOnClickListener {
+      dialog.dismiss()
+    }
+
+    dialog.show()
+
   }
 }

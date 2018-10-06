@@ -25,4 +25,16 @@ class NotesPagerAdapter(fm: FragmentManager, names: List<String>) : FragmentStat
   override fun getCount(): Int {
     return names.size
   }
+
+  fun deleteNotes(){
+    for (fragment in fragments)
+      fragment.deleteSelectedNotes()
+  }
+
+  fun deleteClicked(toDelete: Boolean){
+    for(fragment in fragments)
+      fragment.isMultiSelect = toDelete
+
+  }
+
 }

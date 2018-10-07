@@ -84,7 +84,7 @@ class NewNoteActivity : AppCompatActivity() {
 
     val viewTreeObserver = rootLayout?.viewTreeObserver
     viewTreeObserver?.let { viewTreeObserver ->
-      if (viewTreeObserver!!.isAlive) {
+      if (viewTreeObserver.isAlive) {
         viewTreeObserver.addOnGlobalLayoutListener {
           revealCircleAnimation.revealActivity { finish() }
         }

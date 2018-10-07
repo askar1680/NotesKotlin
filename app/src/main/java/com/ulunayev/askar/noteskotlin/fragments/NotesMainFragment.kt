@@ -19,6 +19,8 @@ import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
+import com.ulunayev.askar.noteskotlin.dialogs.NewSectionDialog
+import com.ulunayev.askar.noteskotlin.dialogs.ReminderDialog
 
 
 class NotesMainFragment : Fragment(), ActionBarCallbackListener {
@@ -60,15 +62,21 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
 
     when (item?.itemId){
       R.id.add_new_section -> {
-        val newSectionDialog = NewSectionDialog(context!!)
-        newSectionDialog.showDialog {
-          sectionNames.add(it)
-          sectionsAdapter?.fragments?.add(NotesFragment())
-          sectionsAdapter?.notifyDataSetChanged()
+        val newSectionDialog = NewSectionDialog(context)
+        newSectionDialog.showDialog {name ->
+          name?.let {
+            sectionNames.add(it)
+            sectionsAdapter?.fragments?.add(NotesFragment())
+            sectionsAdapter?.notifyDataSetChanged()
+          }
+
         }
       }
       R.id.search -> {
+        val reminderDialog = ReminderDialog(context)
+        reminderDialog.showDialog {
 
+        }
       }
       R.id.delete -> {
         activity?.let { activity ->
@@ -79,6 +87,7 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
         }
       }
     }
+
     return super.onOptionsItemSelected(item)
   }
 
@@ -153,24 +162,5 @@ class ActionBarCallback(val activity: Activity): ActionMode.Callback {
     }
     actionBarCallbackListener?.finishClicked()
     mode?.finish()
-  }
-}
-
-class NewSectionDialog(val context: Context) {
-  fun showDialog(onSuccess: (String) -> (Unit)) {
-    val dialog = Dialog(context)
-    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-    dialog.setCancelable(false)
-    dialog.setContentView(R.layout.alert_new_section)
-
-    dialog.okButton.setOnClickListener {
-      if (!dialog.nameEditText.text.isEmpty()){ onSuccess(dialog.nameEditText.text.toString()); dialog.dismiss() }
-    }
-    dialog.cancelButton.setOnClickListener {
-      dialog.dismiss()
-    }
-
-    dialog.show()
-
   }
 }

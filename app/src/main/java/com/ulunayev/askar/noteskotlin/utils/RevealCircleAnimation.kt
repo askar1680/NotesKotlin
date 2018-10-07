@@ -22,7 +22,7 @@ class RevealCircleAnimation(val rootLayout: View?, val revealX: Int, val revealY
         val animOfRootLayout = rootLayout.animate().alpha(0f)
         animOfRootLayout.duration = 400
 
-        rootLayout?.setVisibility(View.VISIBLE)
+        rootLayout.setVisibility(View.VISIBLE)
         circularReveal.start()
 
         circularReveal.addListener( object : AnimatorListenerAdapter() {

@@ -73,10 +73,7 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
         }
       }
       R.id.search -> {
-        val reminderDialog = ReminderDialog(context)
-        reminderDialog.showDialog {
 
-        }
       }
       R.id.delete -> {
         activity?.let { activity ->

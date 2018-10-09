@@ -7,6 +7,8 @@ import android.os.Build
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.ulunayev.askar.noteskotlin.dialogs.ColorDialog
+import com.ulunayev.askar.noteskotlin.dialogs.ReminderDialog
 import com.ulunayev.askar.noteskotlin.utils.RevealCircleAnimation
 import kotlinx.android.synthetic.main.activity_new_note.*
 
@@ -51,10 +53,14 @@ class NewNoteActivity : AppCompatActivity() {
         finish()
       }
       R.id.time_picker -> {
+        val reminderDialog = ReminderDialog(this)
+        reminderDialog.showDialog {
 
+        }
       }
       R.id.color_picker -> {
-
+        val colorDialog = ColorDialog(this)
+        colorDialog.showDialog()
       }
       R.id.share -> {
 

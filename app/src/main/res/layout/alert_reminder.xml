@@ -9,13 +9,13 @@
   android:paddingTop="12dp"
   android:paddingBottom="8dp">
 
-  <Spinner
+  <com.ulunayev.askar.noteskotlin.utils.NDSpinner
     android:id="@+id/dateSpinner"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"/>
 
-  <Spinner
+  <com.ulunayev.askar.noteskotlin.utils.NDSpinner
     android:id="@+id/timeSpinner"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

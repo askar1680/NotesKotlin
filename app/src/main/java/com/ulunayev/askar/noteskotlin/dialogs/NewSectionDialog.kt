@@ -7,7 +7,7 @@ import com.ulunayev.askar.noteskotlin.R
 import kotlinx.android.synthetic.main.alert_new_section.view.*
 
 class NewSectionDialog(val context: Context?) {
-  val layoutInflater = LayoutInflater.from(context)
+  private val layoutInflater = LayoutInflater.from(context)
   fun showDialog(onSuccess: (String?) -> (Unit)) {
 
     val builder = AlertDialog.Builder(context)
@@ -15,8 +15,6 @@ class NewSectionDialog(val context: Context?) {
     builder.setView(view)
     builder.setTitle("New Section")
 
-    val dialog = builder.show()
-    dialog.setCancelable(false)
 
     builder.setPositiveButton("Create"){ dialog, which ->
       val text = view.nameEditText.text
@@ -25,12 +23,9 @@ class NewSectionDialog(val context: Context?) {
     builder.setNegativeButton("Cancel") { dialog, which ->
 
     }
+    val dialog = builder.create()
+    dialog.setCancelable(false)
     dialog.show()
 
   }
 }
-
-//abstract class CustomAlertDialog(val context: Context, val layoutInflater: LayoutInflater){
-//
-//}
-

@@ -26,7 +26,13 @@ class NotesFragment : Fragment() {
     adapter?.notifyDataSetChanged()
   }
 
+  fun finishDeleting(){
+    selectedNotes.clear()
+    adapter?.deletingFinished()
+  }
+
   var isMultiSelect = false
+
 
   private var selectedNotes = mutableListOf<Note>()
   private var adapter: NoteAdapter? = null
@@ -60,30 +66,20 @@ class NotesFragment : Fragment() {
         override fun onItemClick(view: View, position: Int) {
           if (!isMultiSelect) {
             val intent = Intent(context!!, NewNoteActivity::class.java)
-
             startActivity(intent)
           } else {
             adapter?.clickNote(position)
-            selectedNotes.add(notes[position])
+            if (!selectedNotes.contains(notes[position])) {
+              selectedNotes.add(notes[position])
+            }
+            else {
+              selectedNotes.remove(notes[position])
+            }
           }
         }
 
         override fun onLongItemClick(view: View, position: Int) {
-//          isMultiSelect = true
-//          if (isMultiSelect) {
-//          isMultiSelect = true
-//          selectedNotes = ArrayList()
-//          activity?.let { activity ->
-//            val actionBarCallback = ActionBarCallback(activity)
-//            actionBarCallback.actionBarCallbackListener = thisFragment
-//            actionMode = (activity as AppCompatActivity).startSupportActionMode(actionBarCallback)
-//            adapter.clickNote(position)
-//            selectedNotes.add(notes[position])
-//          }
-//          }
-//          else {
-//
-//          }
+
         }
       })
     )

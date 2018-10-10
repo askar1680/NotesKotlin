@@ -4,16 +4,26 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.ulunayev.askar.noteskotlin.R
 import android.os.Build
+import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.ulunayev.askar.noteskotlin.dialogs.ColorDialog
 import com.ulunayev.askar.noteskotlin.dialogs.ReminderDialog
+import com.ulunayev.askar.noteskotlin.models.Color
 import com.ulunayev.askar.noteskotlin.utils.RevealCircleAnimation
 import kotlinx.android.synthetic.main.activity_new_note.*
 
 
-class NewNoteActivity : AppCompatActivity() {
+class NewNoteActivity : AppCompatActivity(), ColorDialog.ColorDialogListener {
+  override fun colorClicked(color: Color?) {
+    color?.let {
+      backgroundView.setBackgroundColor(ContextCompat.getColor(this, it.color))
+      titleEditText.setTextColor(ContextCompat.getColor(this, it.textColor))
+      noteEditText.setTextColor(ContextCompat.getColor(this, it.textColor))
+    }
+  }
+
   companion object {
     val EXTRA_CIRCULAR_REVEAL_X = "EXTRA_CIRCULAR_REVEAL_X"
     val EXTRA_CIRCULAR_REVEAL_Y = "EXTRA_CIRCULAR_REVEAL_Y"
@@ -22,14 +32,14 @@ class NewNoteActivity : AppCompatActivity() {
   private var revealX: Int = 0
   private var revealY: Int = 0
 
+
   private lateinit var revealCircleAnimation: RevealCircleAnimation
 
-  var rootLayout: View? = null
   override fun onBackPressed() {
     super.onBackPressed()
-    revealCircleAnimation.unRevealActivity { finish() }
+    if (revealX != 0 && revealY != 0)
+      revealCircleAnimation.unRevealActivity { finish() }
   }
-
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -60,13 +70,14 @@ class NewNoteActivity : AppCompatActivity() {
       }
       R.id.color_picker -> {
         val colorDialog = ColorDialog(this)
+        colorDialog.colorDialogListener = this
         colorDialog.showDialog()
       }
       R.id.share -> {
 
       }
       R.id.delete -> {
-
+        finish()
       }
     }
     return super.onOptionsItemSelected(item)
@@ -79,24 +90,22 @@ class NewNoteActivity : AppCompatActivity() {
 
       revealX = intent.getIntExtra(EXTRA_CIRCULAR_REVEAL_X, 0)
       revealY = intent.getIntExtra(EXTRA_CIRCULAR_REVEAL_Y, 0)
-
     }
   }
 
   fun setupRevealCircleAnimation(){
-    rootLayout = findViewById(R.id.root_layout)
-    rootLayout?.visibility = View.VISIBLE
-    revealCircleAnimation = RevealCircleAnimation(rootLayout, revealX, revealY)
+    if (revealX != 0 && revealY != 0) {
+      rootLayout.visibility = View.VISIBLE
+      revealCircleAnimation = RevealCircleAnimation(rootLayout, revealX, revealY)
 
-    val viewTreeObserver = rootLayout?.viewTreeObserver
-    viewTreeObserver?.let { viewTreeObserver ->
-      if (viewTreeObserver.isAlive) {
-        viewTreeObserver.addOnGlobalLayoutListener {
-          revealCircleAnimation.revealActivity { finish() }
+      val viewTreeObserver = rootLayout?.viewTreeObserver
+      viewTreeObserver?.let { viewTreeObserver ->
+        if (viewTreeObserver.isAlive) {
+          viewTreeObserver.addOnGlobalLayoutListener {
+            revealCircleAnimation.revealActivity { finish() }
+          }
         }
       }
     }
   }
-
-
 }

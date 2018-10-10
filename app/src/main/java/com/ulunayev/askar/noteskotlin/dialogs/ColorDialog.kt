@@ -1,29 +1,35 @@
 package com.ulunayev.askar.noteskotlin.dialogs
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LevelListDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ulunayev.askar.noteskotlin.R
-import com.ulunayev.askar.noteskotlin.models.Note
 import kotlinx.android.synthetic.main.alert_color.view.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import android.support.v4.content.ContextCompat
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
+import com.ulunayev.askar.noteskotlin.models.Color
 
 
+class ColorDialog(val context: Context?): ColorAdapter.ColorDialogListener{
 
-class ColorDialog(val context: Context?){
+  interface ColorDialogListener{
+    fun colorClicked(color: Color?)
+  }
+
+  override fun colorClicked(color: Color) {
+    dialog?.dismiss()
+    colorDialogListener?.colorClicked(color)
+  }
+
+  var dialog: AlertDialog? = null
+
+  var colorDialogListener: ColorDialogListener? = null
+
   val layoutInflater = LayoutInflater.from(context)
   fun showDialog() {
 
@@ -33,59 +39,56 @@ class ColorDialog(val context: Context?){
     builder.setTitle("New Section")
 
     view.colorRV.layoutManager = GridLayoutManager(context, 4)
-    view.colorRV.adapter = ColorAdapter(listOf("", "", "", "", "", "" ,"", ""))
+    val adapter = ColorAdapter()
+    adapter.colorDialogListener = this
+    view.colorRV.adapter = adapter
 
-
-    builder.setPositiveButton("OK") { dialog, _ ->
-
+    builder.setNegativeButton("Cancel") { dialog, _ ->
+      colorDialogListener?.colorClicked(null)
+      dialog.dismiss()
     }
-    builder.setNegativeButton("Cancel") { dialog, which ->
 
-    }
-
-    val dialog = builder.create()
-    dialog.setCancelable(false)
-    dialog.show()
-
+    dialog = builder.create()
+    dialog?.show()
   }
 }
 
 
+class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
 
-class ColorAdapter(private val notes: List<String>) : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
+  interface ColorDialogListener{
+    fun colorClicked(color: Color)
+  }
 
-  val colors = listOf(R.color.colorPrimary, R.color.grey, R.color.brown, R.color.white,
-    R.color.colorPrimary, R.color.grey, R.color.brown, R.color.white)
+  var colorDialogListener: ColorDialogListener? = null
+//R.color.colorPrimary, R.color.grey, R.color.brown, R.color.white,
+//  R.color.colorPrimary, R.color.grey, R.color.brown, R.color.white
+  private lateinit var context: Context
+  private val colors = listOf(Color(R.color.colorPrimary, R.color.white), Color(R.color.grey, R.color.white),
+                              Color(R.color.brown, R.color.white), Color(R.color.white, R.color.black),
+                              Color(R.color.colorPrimary, R.color.white), Color(R.color.grey, R.color.white),
+                              Color(R.color.brown, R.color.white), Color(R.color.white, R.color.black))
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view = LayoutInflater.from(parent.context).inflate(R.layout.item_color, parent, false)
-    val innerDrawable = ResourcesCompat.getDrawable(parent.context.resources, R.drawable.item_color_bg, null)
-    val strokeWidth = 1
-
+    context = parent.context
     return ViewHolder(view)
   }
 
   override fun getItemCount(): Int {
-    return notes.size
+    return colors.size
   }
 
-  @SuppressLint("ResourceAsColor")
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val note = notes[position]
-
     with(holder) {
-      val background = view.colorView.background
-      when (background) {
-        is ShapeDrawable -> background.paint.color = colors[position]
-        is GradientDrawable -> background.setColor( colors[position])
-        is ColorDrawable -> background.color =  colors[position]
+      val background = view.colorBGView.background as GradientDrawable
+      background.setColor(ContextCompat.getColor(context, colors[position].color))
+
+      view.colorClickView.setOnClickListener { _ ->
+        colorDialogListener?.colorClicked(colors[position])
       }
 
     }
   }
-
-
   class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
-
-
 }

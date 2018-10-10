@@ -34,7 +34,7 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
   }
 
   override fun finishClicked() {
-    sectionsAdapter?.deleteClicked(false)
+    sectionsAdapter?.finishDeleting()
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -80,7 +80,7 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
           val actionBarCallback = ActionBarCallback(activity)
           actionBarCallback.actionBarCallbackListener = this
           actionMode = (activity as AppCompatActivity).startSupportActionMode(actionBarCallback)
-          sectionsAdapter?.deleteClicked(true)
+          sectionsAdapter?.deleteClicked()
         }
       }
     }
@@ -116,6 +116,8 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
     }
   }
 }
+
+
 
 interface ActionBarCallbackListener{
   fun deleteClicked()

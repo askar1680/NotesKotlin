@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
@@ -16,7 +17,7 @@ import java.util.*
 
 
 class ReminderDialog(val context: Context?){
-  val layoutInflater = LayoutInflater.from(context)
+  private val layoutInflater = LayoutInflater.from(context)
   fun showDialog(onSuccess: (String) -> (Unit)) {
     val builder = AlertDialog.Builder(context)
     val view = layoutInflater.inflate(R.layout.alert_reminder, null)
@@ -32,8 +33,7 @@ class ReminderDialog(val context: Context?){
     builder.setNegativeButton("Cancel") { dialog, which ->
 
     }
-    val dialog = builder.show()
-    dialog.setCancelable(false)
+    val dialog = builder.create()
     dialog.show()
   }
 
@@ -47,6 +47,7 @@ class ReminderDialog(val context: Context?){
 
       }
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        Log.d("spinner", "blaaaaaaqqq")
         if (position == dates.size - 1){
           val c = Calendar.getInstance()
           val year = c.get(Calendar.YEAR)
@@ -72,12 +73,13 @@ class ReminderDialog(val context: Context?){
     val timeAdapter = TimeSpinnerAdapter(context, times)
     view.timeSpinner.adapter = timeAdapter
 
-    view.timeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-      override fun onNothingSelected(parent: AdapterView<*>?) {
 
-      }
+    view.timeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+      override fun onNothingSelected(parent: AdapterView<*>?) { }
 
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        Log.d("spinner", "time select")
         if (position == times.size - 1) {
           val cal = Calendar.getInstance()
           val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
@@ -86,13 +88,12 @@ class ReminderDialog(val context: Context?){
             val time = SimpleDateFormat("HH:mm a").format(cal.time)
             times[position].time = time
             timeAdapter.notifyDataSetChanged()
+
           }
           TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
         }
       }
-
     }
-
   }
 }
 

@@ -6,11 +6,22 @@
   android:padding="4dp">
 
   <View
-    android:id="@+id/colorView"
+    android:id="@+id/colorBGView"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     app:layout_constraintDimensionRatio="1:1"
     android:background="@drawable/item_color_bg"
     />
+
+  <!--android:background="?actionBarItemBackground"-->
+  <View
+    android:id="@+id/colorClickView"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintDimensionRatio="1:1"
+    android:background="@drawable/item_color_click_bg"
+    android:alpha="0.3"
+    android:focusable="true"
+    android:clickable="true"/>
 
 </android.support.constraint.ConstraintLayout>

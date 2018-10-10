@@ -1,4 +1,4 @@
-package com.ulunayev.askar.noteskotlin.handlers
+package com.ulunayev.askar.noteskotlin.db
 
 import android.content.ContentValues
 import android.content.Context

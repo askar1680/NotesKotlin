@@ -30,11 +30,14 @@ class NotesPagerAdapter(fm: FragmentManager, names: List<String>) : FragmentStat
     for (fragment in fragments)
       fragment.deleteSelectedNotes()
   }
-
-  fun deleteClicked(toDelete: Boolean){
-    for(fragment in fragments)
-      fragment.isMultiSelect = toDelete
-
+  fun deleteClicked(){
+    for (fragment in fragments)
+      fragment.isMultiSelect = true
   }
-
+  fun finishDeleting(){
+    for (fragment in fragments) {
+      fragment.isMultiSelect = false
+      fragment.finishDeleting()
+    }
+  }
 }

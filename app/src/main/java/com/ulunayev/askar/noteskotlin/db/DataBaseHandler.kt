@@ -32,7 +32,6 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
     fun insertNote(note: Note){
         val db = this.writableDatabase
         var cv = ContentValues()
-        cv.put(COL_ID,note.id)
         cv.put(COL_POSITION,note.position)
         cv.put(COL_TITLE,note.title)
         cv.put(COL_NOTE,note.note)

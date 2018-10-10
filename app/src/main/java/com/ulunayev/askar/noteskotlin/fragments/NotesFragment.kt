@@ -46,13 +46,13 @@ class NotesFragment : Fragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
-    notes.add(Note(2121, 0, "Title1", "Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(2121, 0, "Title2", "Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(2121, 0, "Title3", "Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(2121, 0, "Title4", "Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(2121, 0, "Title5", "Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(2121, 0, "Title6", "Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(2121, 0, "Title7", "Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
+    notes.add(Note(0, "Title1", "Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
+    notes.add(Note(0, "Title2", "Blablabla Blablabla Blablabla Blablabla ", "type"))
+    notes.add(Note(0, "Title3", "Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
+    notes.add(Note(0, "Title4", "Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
+    notes.add(Note(0, "Title5", "Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
+    notes.add(Note(0, "Title6", "Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
+    notes.add(Note(0, "Title7", "Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
 
     adapter = NoteAdapter(notes)
     notesRV.adapter = adapter

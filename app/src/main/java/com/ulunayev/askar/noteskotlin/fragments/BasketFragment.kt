@@ -31,7 +31,7 @@ class BasketFragment : Fragment() {
     var notes = mutableListOf<Note>()
     var count = 0
     while (count < 10){
-      notes.add(Note(231231, 0, "Title$count", "BlablablaBlablablaBlablablaBlablablaBlablablaBlablabla", "cdscds"))
+      notes.add(Note(0, "Title$count", "BlablablaBlablablaBlablablaBlablablaBlablablaBlablabla", "cdscds"))
       count ++
     }
 

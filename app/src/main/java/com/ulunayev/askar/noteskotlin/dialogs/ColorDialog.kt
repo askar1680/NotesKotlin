@@ -61,8 +61,6 @@ class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
   }
 
   var colorDialogListener: ColorDialogListener? = null
-//R.color.colorPrimary, R.color.grey, R.color.brown, R.color.white,
-//  R.color.colorPrimary, R.color.grey, R.color.brown, R.color.white
   private lateinit var context: Context
   private val colors = listOf(Color(R.color.colorPrimary, R.color.white), Color(R.color.grey, R.color.white),
                               Color(R.color.brown, R.color.white), Color(R.color.white, R.color.black),
@@ -87,7 +85,6 @@ class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
       view.colorClickView.setOnClickListener { _ ->
         colorDialogListener?.colorClicked(colors[position])
       }
-
     }
   }
   class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)

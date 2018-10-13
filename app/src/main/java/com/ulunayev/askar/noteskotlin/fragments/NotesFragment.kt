@@ -15,6 +15,10 @@ import com.ulunayev.askar.noteskotlin.adapters.NoteAdapter
 import com.ulunayev.askar.noteskotlin.models.Note
 import com.ulunayev.askar.noteskotlin.utils.RecyclerItemClickListener
 import kotlinx.android.synthetic.main.fragment_notes.*
+import com.ulunayev.askar.noteskotlin.db.AppDatabase
+import android.arch.persistence.room.Room
+
+
 
 
 class NotesFragment : Fragment() {
@@ -46,13 +50,10 @@ class NotesFragment : Fragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
-    notes.add(Note(0, "Title1", "Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(0, "Title2", "Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(0, "Title3", "Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(0, "Title4", "Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(0, "Title5", "Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(0, "Title6", "Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
-    notes.add(Note(0, "Title7", "Blablabla Blablabla Blablabla Blablabla Blablabla ", "type"))
+    val db = Room.databaseBuilder(context!!,
+      AppDatabase::class.java, "database-name").allowMainThreadQueries().build()
+
+    notes = db.userDao().all.toMutableList()
 
     adapter = NoteAdapter(notes)
     notesRV.adapter = adapter

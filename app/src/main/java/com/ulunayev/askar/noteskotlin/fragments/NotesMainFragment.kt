@@ -12,22 +12,29 @@ import com.ulunayev.askar.noteskotlin.R
 import com.ulunayev.askar.noteskotlin.activities.NewNoteActivity
 import com.ulunayev.askar.noteskotlin.adapters.NotesPagerAdapter
 import kotlinx.android.synthetic.main.fragment_notes_main.*
-import kotlinx.android.synthetic.main.alert_new_section.*
-import android.app.Dialog
-import android.content.Context
 import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import com.ulunayev.askar.noteskotlin.dialogs.NewSectionDialog
-import com.ulunayev.askar.noteskotlin.dialogs.ReminderDialog
+import android.support.v7.widget.SearchView
+import android.util.Log
+import android.content.Context.SEARCH_SERVICE
+import android.support.v4.content.ContextCompat.getSystemService
+import android.app.SearchManager
+import android.content.Context
+import android.support.v4.view.MenuItemCompat.getActionView
 
 
-class NotesMainFragment : Fragment(), ActionBarCallbackListener {
+
+
+class NotesMainFragment : Fragment(), ActionBarCallbackListener, MenuItem.OnActionExpandListener {
+
   override fun deleteClicked() {
     sectionsAdapter?.deleteNotes()
     actionMode?.finish()
   }
+
 
   override fun changeColorClicked() {
 
@@ -46,7 +53,8 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
 
   private lateinit var sectionNames: MutableList<String>
   private var sectionsAdapter: NotesPagerAdapter? = null
-
+  private var searchView: SearchView? = null
+  private var queryTextListener: SearchView.OnQueryTextListener? = null
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
@@ -59,7 +67,7 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
+    searchView?.setOnQueryTextListener(queryTextListener)
     when (item?.itemId){
       R.id.add_new_section -> {
         val newSectionDialog = NewSectionDialog(context)
@@ -69,7 +77,6 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
             sectionsAdapter?.fragments?.add(NotesFragment())
             sectionsAdapter?.notifyDataSetChanged()
           }
-
         }
       }
       R.id.search -> {
@@ -91,6 +98,36 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
   override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
     inflater?.inflate(R.menu.menu_notes_main, menu)
     super.onCreateOptionsMenu(menu, inflater)
+    val searchItem = menu?.findItem(R.id.search)
+    val searchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager?
+    if (searchItem != null) {
+      searchView = searchItem.getActionView() as SearchView?
+    }
+    searchView?.setSearchableInfo(searchManager?.getSearchableInfo(activity!!.componentName))
+
+    queryTextListener = object : SearchView.OnQueryTextListener {
+      override fun onQueryTextChange(newText: String): Boolean {
+        Log.i("onQueryTextChange", newText)
+
+        return true
+      }
+
+      override fun onQueryTextSubmit(query: String): Boolean {
+        Log.i("onQueryTextSubmit", query)
+
+        return true
+      }
+    }
+    searchView?.setOnQueryTextListener(queryTextListener)
+  }
+
+
+  override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+    return true
+  }
+
+  override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+    return true
   }
 
   fun setupTabLayoutAndViewPager() {
@@ -116,8 +153,6 @@ class NotesMainFragment : Fragment(), ActionBarCallbackListener {
     }
   }
 }
-
-
 
 interface ActionBarCallbackListener{
   fun deleteClicked()

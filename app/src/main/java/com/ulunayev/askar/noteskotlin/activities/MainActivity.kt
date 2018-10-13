@@ -1,5 +1,6 @@
 package com.ulunayev.askar.noteskotlin.activities
 
+import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -17,6 +18,9 @@ import com.ulunayev.askar.noteskotlin.fragments.NotesFragment
 import com.ulunayev.askar.noteskotlin.fragments.NotesMainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import android.support.v4.media.session.MediaButtonReceiver.handleIntent
+
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,6 +42,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     toggle.syncState()
 
   }
+
+
+
 
   override fun onBackPressed() {
     if (drawer_layout.isDrawerOpen(GravityCompat.START)) {

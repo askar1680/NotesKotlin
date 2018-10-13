@@ -13,6 +13,9 @@ import com.ulunayev.askar.noteskotlin.dialogs.ReminderDialog
 import com.ulunayev.askar.noteskotlin.models.Color
 import com.ulunayev.askar.noteskotlin.utils.RevealCircleAnimation
 import kotlinx.android.synthetic.main.activity_new_note.*
+import com.ulunayev.askar.noteskotlin.db.AppDatabase
+import android.arch.persistence.room.Room
+import com.ulunayev.askar.noteskotlin.models.Note
 
 
 class NewNoteActivity : AppCompatActivity(), ColorDialog.ColorDialogListener {
@@ -50,6 +53,7 @@ class NewNoteActivity : AppCompatActivity(), ColorDialog.ColorDialogListener {
 
     getExtrasFromIntent(savedInstanceState)
     setupRevealCircleAnimation()
+
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -60,6 +64,10 @@ class NewNoteActivity : AppCompatActivity(), ColorDialog.ColorDialogListener {
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId){
       android.R.id.home -> {
+        val db = Room.databaseBuilder(this,
+          AppDatabase::class.java, "database-name").allowMainThreadQueries().build()
+        db.userDao().insertAll(Note(0,  0, titleEditText.text.toString(), noteEditText.text.toString(),
+          "type1"))
         finish()
       }
       R.id.time_picker -> {
